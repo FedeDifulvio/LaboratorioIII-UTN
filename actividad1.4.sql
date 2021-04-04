@@ -36,7 +36,7 @@ go
 	 apellido varchar(20) not null,
 	 fecha_nacimiento datetime not null,
      mail varchar(50) null,
-	 celular varchar(25) null check(mail is not null),
+	 celular varchar(25) null,
 	 direccion varchar(40) null,
 	 codPostal smallint null foreign key references ciudades(codPostal),
 	 tipo_colaborador bit not null

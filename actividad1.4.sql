@@ -10,23 +10,24 @@ go
    costo_estimado money not null check (costo_estimado > 0),
    tiempo_estimado smallint not null,
    fecha_inicio datetime not null,
-   fecha_fin datetime not null check (fecha_fin > fecha_inicio),
-   fecha_inicio_estimada datetime not null
+   fecha_fin datetime not null,
+   fecha_inicio_estimada datetime not null,
+   constraint fechas check (fecha_inicio < fecha_fin)
  ) 
 
  
  go 
 
-create table provincias(
-  codProvincia tinyint primary key identity(1,1),
-  provincia varchar(30)
+create table paises(
+  codPais char(2) primary key not null,
+  nombre_pais varchar(30)
 )
 go
 
 create table ciudades(
-   codPostal smallint primary key not null,
-   ciudad varchar(30) not null,
-   codProvincia tinyint foreign key references provincias(codProvincia) not null
+   codCiudad int primary key identity(1,1) not null,
+   nombre_ciudad varchar(30) not null,
+   codPais char(2) foreign key references paises (codPais) not null
 )
 
 go 
@@ -38,10 +39,8 @@ go
      mail varchar(50) null,
 	 celular varchar(25) null,
 	 direccion varchar(40) null,
-	 codPostal smallint null foreign key references ciudades(codPostal),
-	 tipo_colaborador bit not null
-	 constraint mailYcelular check((mail is null and celular is not null) 
-	                               or (mail is not  null and celular is null)
-							       or (mail is not  null and celular is  not null))
+	 codCiudad int null foreign key references ciudades(codCiudad),
+	 tipo_colaborador bit not null,
+	 constraint mailYcelular check(mail is not null or celular is not null)
 
   ) 

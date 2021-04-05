@@ -31,7 +31,7 @@ create table ciudades(
 )
 
 go 
-  create table colaboradores(
+create table colaboradores(
      id smallint primary key identity (1,1) not null,
 	 nombre varchar(20) not null,
 	 apellido varchar(20) not null,
@@ -42,5 +42,5 @@ go
 	 codCiudad int null foreign key references ciudades(codCiudad),
 	 tipo_colaborador bit not null,
 	 constraint mailYcelular check(mail is not null or celular is not null)
-
   ) 
+

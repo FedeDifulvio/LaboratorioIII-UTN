@@ -18,7 +18,7 @@ create table clientes(
 ) 
 go
 create table proyectos(
-   id_proyecto int primary key identity(1,1) not null,
+   id_proyecto varchar(5) primary key not null,
    nombre_proyecto nvarchar(50) not null,
    descripcion varchar(400)null,
    id_cliente int foreign key references clientes (idCliente),

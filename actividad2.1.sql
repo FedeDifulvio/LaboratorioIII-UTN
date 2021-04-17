@@ -38,10 +38,31 @@ Use blueprint
 -- 19) Listado de clientes cuya razón social no finalice con vocal.
        select * from clientes where razonSocial not like '%[aeiou]' 
 -- 20) Listado de clientes cuya razón social no contenga espacios.
+       select * from clientes where razonSocial not like '% %'
 -- 21) Listado de clientes cuya razón social contenga más de un espacio.
+       select * from clientes where razonSocial  like '% % %'
 -- 22) Listado de razón social, cuit, email y celular de aquellos clientes que tengan mail pero no teléfono.
+       select razonSocial, cuit, email, celular from clientes where EMail is not null and telefono is null
 -- 23) Listado de razón social, cuit, email y celular de aquellos clientes que no tengan mail pero sí teléfono.
+       select razonSocial, cuit, email, celular from clientes where EMail is  null and telefono is not null
 -- 24) Listado de razón social, cuit, email, teléfono o celular de aquellos clientes que tengan mail o teléfono o celular .
+       select razonSocial, cuit, email, celular from clientes where EMail is not null or telefono is not null or telefono is not null
 -- 25) Listado de razón social, cuit y mail. Si no dispone de mail debe aparecer el texto "Sin mail".
--- 26) Listado de razón social, cuit y una columna llamada Contacto con el mail, si no posee mail, con el número de celular y si no posee número de celular con un texto que diga "Incontactable". 
+       select RazonSocial, Cuit, 
+	   case 
+	   when Email IS NULL then 'Sin email' 
+	   else Email end as 'Email' from Clientes
 
+-- 26) Listado de razón social, cuit y una columna llamada Contacto con el mail, si no posee mail, con el número de celular y si no posee número de celular con un texto que diga "Incontactable". 
+        --opc 1
+         select razonSocial, cuit,
+		 case 
+		 when celular is null and email is null and telefono is null then 'Incontactable'
+		 when celular is not  null then celular
+		 when email is  not null then email
+		 when telefono is not null then telefono
+		 end as 'contacto'
+		 from clientes
+
+		 --opc 2 
+		 select razonSocial, cuit, coalesce(email, celular, telefono, 'incontactable') as Contacto from clientes
